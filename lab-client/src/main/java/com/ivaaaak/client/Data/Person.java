@@ -1,11 +1,13 @@
 package com.ivaaaak.client.Data;
 
 
+import com.ivaaaak.client.CollectionStorage;
+
 import java.util.Objects;
 
 public class Person implements Comparable<Person> {
 
-    private Integer id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
+    private final Integer id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //Поле не может быть null
     private final java.time.LocalDateTime creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
@@ -17,8 +19,13 @@ public class Person implements Comparable<Person> {
 
 
 
-    public Person() {
+    public Person(CollectionStorage collectionStorage) {
         this.creationDate = java.time.LocalDateTime.now();
+        this.id = collectionStorage.getMaxId() + 1;
+    }
+    public Person(Integer id) {
+        this.creationDate = java.time.LocalDateTime.now();
+        this.id = id;
     }
 
     @Override
@@ -72,10 +79,6 @@ public class Person implements Comparable<Person> {
 
     public Color getHairColor() {
         return hairColor;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public void setWeight(float weight) {

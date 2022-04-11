@@ -5,7 +5,7 @@ import com.ivaaaak.client.Data.Location;
 import com.ivaaaak.client.Data.Person;
 import com.ivaaaak.client.util.LocationMaker;
 
-import java.util.Enumeration;
+import java.util.ArrayList;
 import java.util.StringJoiner;
 
 public class FilterByLocationCommand extends Command {
@@ -19,22 +19,21 @@ public class FilterByLocationCommand extends Command {
 
     @Override
     public CommandResult execute(String arg) {
+
         Location l = LocationMaker.initialize();
+        ArrayList<Person> list = collectionStorage.getMatchingPeople(l);
 
-        Enumeration<Person> enumValue = collectionStorage.getHashtable().elements();
-        StringJoiner output = new StringJoiner("\n");
-
-        while (enumValue.hasMoreElements()) {
-            Person p = enumValue.nextElement();
-
-            if (p.getLocation().equals(l)) {
-                output.add(p.toString());
+        if (list == null) {
+            return new CommandResult(false, "The collection is empty");
+        } else {
+            StringJoiner output = new StringJoiner("\n\n");
+            for (Person person : list) {
+                output.add(person.toString());
             }
+            if (output.toString().isEmpty()) {
+                return new CommandResult(false, "There aren't any elements with this location");
+            }
+            return new CommandResult(false, output.toString());
         }
-        if (output.toString().equals("")) {
-            return new CommandResult(false, "There aren't any elements with this location");
-        }
-        return new CommandResult(false, output.toString());
-
     }
 }

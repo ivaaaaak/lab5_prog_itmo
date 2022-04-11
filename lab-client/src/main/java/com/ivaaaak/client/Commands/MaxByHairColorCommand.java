@@ -1,10 +1,7 @@
 package com.ivaaaak.client.Commands;
 
 import com.ivaaaak.client.CollectionStorage;
-import com.ivaaaak.client.Data.Color;
 import com.ivaaaak.client.Data.Person;
-
-import java.util.Enumeration;
 
 public class MaxByHairColorCommand extends Command {
 
@@ -17,21 +14,12 @@ public class MaxByHairColorCommand extends Command {
 
     @Override
     public CommandResult execute(String arg) {
-        Person maxPerson = null;
-        Enumeration<Person> enumValue = collectionStorage.getHashtable().elements();
+        Person maxPerson = collectionStorage.getMaxColorPerson();
 
-        while (enumValue.hasMoreElements()) {
-            Person p = enumValue.nextElement();
-            if (p.getHairColor().equals(Color.ORANGE)) {
-                maxPerson = p;
-                break;
-            } else if (p.getHairColor().equals(Color.BLUE)) {
-                maxPerson = p;
-            } else if (p.getHairColor().equals(Color.RED)) {
-                maxPerson = p;
-            }
+        if (maxPerson == null) {
+            return new CommandResult(false, "The collection is empty");
+        } else {
+            return new CommandResult(false, maxPerson.toString());
         }
-        assert maxPerson != null;
-        return new CommandResult(false, maxPerson.toString());
     }
 }

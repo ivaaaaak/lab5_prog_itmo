@@ -17,7 +17,7 @@ public class SaveCommand extends Command {
 
     @Override
     public CommandResult execute(String inputArg) {
-        FileManager.write(JsonParser.serialize(collectionManager.getHashtable()), System.getenv("LAB"));
+        FileManager.write(JsonParser.serialize(collectionManager.getHashtable()), FileManager.FILE_PATH);
         return new CommandResult(false, "Collection has been saved");
     }
 }

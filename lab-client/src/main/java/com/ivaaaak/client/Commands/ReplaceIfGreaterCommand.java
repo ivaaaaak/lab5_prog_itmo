@@ -18,20 +18,18 @@ public class ReplaceIfGreaterCommand extends Command {
         if (arg.isEmpty()) {
             return new CommandResult(false, "This command needs an argument. Please try again and enter the key:");
         } else {
-            int key;
             try {
-                key = Integer.parseInt(arg);
+                int key = Integer.parseInt(arg);
+                Person newPerson = new Person(collectionStorage);
+                PersonMaker.initializePerson(newPerson);
+                if (collectionStorage.replaceIfNewGreater(key, newPerson)) {
+                    return new CommandResult(false, "The element has been replaced");
+                }
+                return new CommandResult(false, "The element is greater than a new one");
             } catch (NumberFormatException e) {
                 return new CommandResult(false, "Argument is an integer number. Use \"show\" to get information about elements\n");
             }
-            Person oldPerson = collectionStorage.getHashtable().get(key);
-            Person p = PersonMaker.initializePerson(collectionStorage.getMaxId() + 1);
-            if (oldPerson.compareTo(p) < 0) {
-                collectionStorage.getHashtable().replace(key, oldPerson, p);
-                return new CommandResult(false, "The element has been replaced");
-            }
 
-            return new CommandResult(false, "The element is greater than a new one");
         }
     }
 }

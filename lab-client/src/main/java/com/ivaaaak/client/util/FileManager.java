@@ -12,6 +12,8 @@ import java.util.StringJoiner;
 
 public final class FileManager {
 
+    public static final String FILE_PATH = System.getenv("LAB");
+
     private FileManager() {
 
     }

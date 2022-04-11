@@ -1,10 +1,14 @@
 package com.ivaaaak.client;
 
+import com.ivaaaak.client.Data.Color;
+import com.ivaaaak.client.Data.Location;
 import com.ivaaaak.client.Data.Person;
 
 import java.time.LocalDate;
-import java.util.Enumeration;
+import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Map;
+
 
 public class CollectionStorage {
     private Hashtable<Integer, Person> hashtable = new Hashtable<>();
@@ -12,9 +16,8 @@ public class CollectionStorage {
 
     public Integer getMaxId() {
         int maxID = 0;
-        Enumeration<Integer> keys = hashtable.keys();
-        for (int i = 0; i < hashtable.size(); i++) {
-            int key = keys.nextElement();
+        for (Map.Entry<Integer, Person> hashtableEntry : hashtable.entrySet()) {
+            int key = hashtableEntry.getKey();
             if (key > maxID) {
                 maxID = key;
             }
@@ -34,4 +37,119 @@ public class CollectionStorage {
         creationDate = LocalDate.now();
         hashtable = ht;
     }
+
+    public void clear() {
+        hashtable.clear();
+    }
+
+    public void remove(Integer key) {
+        hashtable.remove(key);
+    }
+
+    public void add(Integer key, Person p) {
+        hashtable.put(key, p);
+    }
+
+    public void replace(Integer key, Person newPerson) {
+        hashtable.replace(key, newPerson);
+    }
+
+    public ArrayList<Person> getMatchingPeople(Location l) {
+        if (hashtable.isEmpty()) {
+            return null;
+        } else {
+            ArrayList<Person> list = new ArrayList<>();
+
+            for (Map.Entry<Integer, Person> hashtableEntry : hashtable.entrySet()) {
+                Person p = hashtableEntry.getValue();
+                if (p.getLocation().equals(l)) {
+                    list.add(p);
+                }
+            }
+            return list;
+        }
+    }
+    public ArrayList<Person> getMatchingPeople(String substring) {
+        if (hashtable.isEmpty()) {
+            return null;
+        } else {
+            ArrayList<Person> list = new ArrayList<>();
+            for (Map.Entry<Integer, Person> hashtableEntry : hashtable.entrySet()) {
+                Person p = hashtableEntry.getValue();
+                if (p.getName().startsWith(substring)) {
+                    list.add(p);
+                }
+            }
+            return list;
+        }
+    }
+    public Person getMaxColorPerson() {
+        Person maxPerson = null;
+        Color maxColor = Color.RED;
+
+        for (Map.Entry<Integer, Person> hashtableEntry : hashtable.entrySet()) {
+            Person p = hashtableEntry.getValue();
+            if (p.getHairColor().compareTo(maxColor) >= 0) {
+                maxColor = p.getHairColor();
+                maxPerson = p;
+            }
+        }
+        return maxPerson;
+    }
+    public void removeLowerPerson(float height) {
+        ArrayList<Integer> keys = new ArrayList<>();
+
+        for (Map.Entry<Integer, Person> hashtableEntry : hashtable.entrySet()) {
+            Integer currentKey = hashtableEntry.getKey();
+            Person oldPerson = hashtable.get(currentKey);
+
+            if (oldPerson.getHeight() - height < 0) {
+               keys.add(currentKey);
+            }
+        }
+        for (Integer key : keys) {
+            hashtable.remove(key);
+        }
+    }
+    public boolean replaceIfNewGreater(Integer oldKey, Person newPerson) {
+        Person oldPerson = hashtable.get(oldKey);
+        if (oldPerson.compareTo(newPerson) < 0) {
+            hashtable.replace(oldKey, oldPerson, newPerson);
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public boolean replaceIfNewLower(Integer oldKey, Person newPerson) {
+        Person oldPerson = hashtable.get(oldKey);
+        if (oldPerson.compareTo(newPerson) > 0) {
+            hashtable.replace(oldKey, oldPerson, newPerson);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public ArrayList<Person> getElementsList() {
+        ArrayList<Person> list = new ArrayList<>();
+        for (Map.Entry<Integer, Person> hashtableEntry : hashtable.entrySet()) {
+            Person p = hashtableEntry.getValue();
+            list.add(p);
+        }
+        return list;
+    }
+
+    public Integer getMatchingKey(Integer id) {
+        for (Map.Entry<Integer, Person> hashtableEntry : hashtable.entrySet()) {
+            Integer currentKey = hashtableEntry.getKey();
+            Person oldPerson = hashtable.get(currentKey);
+
+            if (oldPerson.getId().equals(id)) {
+                return currentKey;
+            }
+        }
+        return null;
+    }
+
+
 }

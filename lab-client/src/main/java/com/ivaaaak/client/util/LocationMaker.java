@@ -26,7 +26,7 @@ public final class LocationMaker {
         } while (y == null);
         l.setY(y);
 
-        System.out.println("Enter integer location Z (can be null):");
+        System.out.println("Enter integer location Z:");
         Integer z;
         do {
             z = PersonConverter.convertLocationZ(UserInputManager.readLine());

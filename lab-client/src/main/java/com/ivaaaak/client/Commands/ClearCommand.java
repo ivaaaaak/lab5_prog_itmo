@@ -12,7 +12,7 @@ public class ClearCommand extends Command {
 
     @Override
     public CommandResult execute(String inputArg) {
-        collectionManager.getHashtable().clear();
+        collectionManager.clear();
         return new CommandResult(false, "Collection has been cleared");
     }
 }

@@ -10,10 +10,10 @@ public class UserInputManager {
      * This class reads user input from keyboard or from file with the script
      */
 
-    private boolean hasFile = false;
-    private Scanner scanner;
+    private static boolean hasFile = false;
+    private static Scanner scanner;
 
-    public String readCommand() {
+    public static String readLine() {
 
         final Scanner sc =  new Scanner(System.in);
 
@@ -29,17 +29,15 @@ public class UserInputManager {
         } else {
             return sc.nextLine();
         }
-
     }
 
     public void connectToFile(String filePath) {
-        hasFile = true;
-        this.scanner = new Scanner(FileManager.read(filePath));
-    }
-
-    public static String readLine() {
-        final Scanner scanner = new Scanner(System.in);
-        return scanner.nextLine();
+        if (FileManager.read(filePath).contains(filePath)) {
+            throw new UnsupportedOperationException("The file contains recursion");
+        } else {
+            hasFile = true;
+            scanner = new Scanner(FileManager.read(filePath));
+        }
     }
 
 }

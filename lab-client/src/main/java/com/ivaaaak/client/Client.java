@@ -21,7 +21,7 @@ public final class Client {
 
 
 
-        String fileData = FileManager.read(System.getenv("LAB"));
+        String fileData = FileManager.read(FileManager.FILE_PATH);
         Hashtable<Integer, Person> ht = JsonParser.deserialize(fileData);
         collectionStorage.initializeHashtable(ht);
 
@@ -29,7 +29,7 @@ public final class Client {
         do {
             String name = "";
             String arg = "";
-            String[] command = userInputManager.readCommand().split(" ");
+            String[] command = UserInputManager.readLine().split(" ");
 
             if (command.length >= 1) {
                 name = command[0];
