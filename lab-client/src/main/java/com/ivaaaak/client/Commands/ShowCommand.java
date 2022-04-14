@@ -1,30 +1,29 @@
 package com.ivaaaak.client.Commands;
 
 import com.ivaaaak.client.CollectionStorage;
-import com.ivaaaak.client.Data.Person;
 
 import java.util.StringJoiner;
 
 public class ShowCommand extends Command {
 
-    private final CollectionStorage collectionManager;
+    private final CollectionStorage collectionStorage;
 
-    public ShowCommand(CollectionStorage collectionManager) {
+    public ShowCommand(CollectionStorage collectionStorage) {
         super("show");
-        this.collectionManager = collectionManager;
+        this.collectionStorage = collectionStorage;
     }
 
     @Override
     public CommandResult execute(String inputArg) {
-        StringJoiner output = new StringJoiner("\n\n");
-        for (Person person : collectionManager.getElementsList()) {
-            output.add(person.toString());
-        }
-        if (output.toString().isEmpty()) {
+
+        if (collectionStorage.getHashtable().isEmpty()) {
             return new CommandResult(false, "The collection is empty");
         }
+        StringJoiner output = new StringJoiner("\n\n");
+        for (Integer key : collectionStorage.getKeysList()) {
+            output.add(key + " = " + collectionStorage.getPerson(key).toString());
+        }
         return new CommandResult(false, output.toString());
-
     }
 
 }

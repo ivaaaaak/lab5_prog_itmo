@@ -5,16 +5,14 @@ import java.util.Objects;
 
     public class Coordinates {
 
-        private Integer x = null; //Максимальное значение поля: 172, Поле не может быть null
-        private Double y = null; //Поле не может быть null
+        private final Integer x; //Максимальное значение: 172, не null
+        private final Double y; //не null
 
-        public void setY(Double y) {
+        public Coordinates(Integer x, Double y) {
+            this.x = x;
             this.y = y;
         }
 
-        public void setX(Integer x) {
-            this.x = x;
-        }
 
         @Override
         public String toString() {

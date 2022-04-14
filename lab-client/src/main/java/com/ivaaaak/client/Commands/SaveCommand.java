@@ -8,7 +8,6 @@ public class SaveCommand extends Command {
     private final CollectionStorage collectionManager;
 
 
-
     public SaveCommand(CollectionStorage collectionManager) {
         super("save");
         this.collectionManager = collectionManager;

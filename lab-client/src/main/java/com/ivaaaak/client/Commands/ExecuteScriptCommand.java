@@ -2,6 +2,9 @@ package com.ivaaaak.client.Commands;
 
 import com.ivaaaak.client.UserInputManager;
 
+import java.io.IOException;
+
+
 public class ExecuteScriptCommand extends Command {
 
     private final UserInputManager userInputManager;
@@ -15,9 +18,12 @@ public class ExecuteScriptCommand extends Command {
     public CommandResult execute(String arg) {
         if (arg.isEmpty()) {
             return new CommandResult(false, "This command needs an argument. Please try again and enter the file path:");
-        } else {
-            userInputManager.connectToFile(arg);
-            return new CommandResult(false, "");
         }
+        try {
+            userInputManager.connectToFile(arg);
+        } catch (IOException e) {
+            return new CommandResult(false, e.getMessage());
+        }
+        return new CommandResult(false, "");
     }
 }

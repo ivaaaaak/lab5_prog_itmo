@@ -1,27 +1,18 @@
 package com.ivaaaak.client.Data;
 
-
 import java.util.Objects;
 
 public class Location {
 
-    private Long x; //Поле не может быть null
-    private Integer y; //Поле не может быть null
-    private int z;
+    private final Long x; //не null
+    private final Integer y; //не null
+    private final int z;
 
-    public void setX(Long x) {
+    public Location(Long x, Integer y, int z) {
         this.x = x;
-    }
-
-    public void setY(Integer y) {
         this.y = y;
-    }
-
-    public void setZ(int z) {
         this.z = z;
     }
-
-
 
     @Override
     public String toString() {

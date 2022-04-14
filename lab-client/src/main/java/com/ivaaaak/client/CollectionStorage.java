@@ -17,9 +17,9 @@ public class CollectionStorage {
     public Integer getMaxId() {
         int maxID = 0;
         for (Map.Entry<Integer, Person> hashtableEntry : hashtable.entrySet()) {
-            int key = hashtableEntry.getKey();
-            if (key > maxID) {
-                maxID = key;
+            Person p = hashtableEntry.getValue();
+            if (p.getId() > maxID) {
+                maxID = p.getId();
             }
         }
         return maxID;
@@ -54,34 +54,33 @@ public class CollectionStorage {
         hashtable.replace(key, newPerson);
     }
 
-    public ArrayList<Person> getMatchingPeople(Location l) {
-        if (hashtable.isEmpty()) {
-            return null;
-        } else {
-            ArrayList<Person> list = new ArrayList<>();
+    public Person getPerson(Integer key) {
+        return hashtable.get(key);
+    }
 
-            for (Map.Entry<Integer, Person> hashtableEntry : hashtable.entrySet()) {
-                Person p = hashtableEntry.getValue();
-                if (p.getLocation().equals(l)) {
-                    list.add(p);
-                }
+    public ArrayList<Person> getMatchingPeople(Location l) {
+        ArrayList<Person> list = new ArrayList<>();
+
+        for (Map.Entry<Integer, Person> hashtableEntry : hashtable.entrySet()) {
+            Person p = hashtableEntry.getValue();
+            if (p.getLocation().equals(l)) {
+                list.add(p);
             }
-            return list;
         }
+        return list;
+
     }
     public ArrayList<Person> getMatchingPeople(String substring) {
-        if (hashtable.isEmpty()) {
-            return null;
-        } else {
-            ArrayList<Person> list = new ArrayList<>();
-            for (Map.Entry<Integer, Person> hashtableEntry : hashtable.entrySet()) {
-                Person p = hashtableEntry.getValue();
-                if (p.getName().startsWith(substring)) {
-                    list.add(p);
-                }
+        ArrayList<Person> list = new ArrayList<>();
+
+        for (Map.Entry<Integer, Person> hashtableEntry : hashtable.entrySet()) {
+            Person p = hashtableEntry.getValue();
+            if (p.getName().startsWith(substring)) {
+                list.add(p);
             }
-            return list;
         }
+        return list;
+
     }
     public Person getMaxColorPerson() {
         Person maxPerson = null;
@@ -116,25 +115,25 @@ public class CollectionStorage {
         if (oldPerson.compareTo(newPerson) < 0) {
             hashtable.replace(oldKey, oldPerson, newPerson);
             return true;
-        } else {
-            return false;
         }
+        return false;
+
     }
     public boolean replaceIfNewLower(Integer oldKey, Person newPerson) {
         Person oldPerson = hashtable.get(oldKey);
         if (oldPerson.compareTo(newPerson) > 0) {
             hashtable.replace(oldKey, oldPerson, newPerson);
             return true;
-        } else {
-            return false;
         }
+        return false;
+
     }
 
-    public ArrayList<Person> getElementsList() {
-        ArrayList<Person> list = new ArrayList<>();
+    public ArrayList<Integer> getKeysList() {
+        ArrayList<Integer> list = new ArrayList<>();
         for (Map.Entry<Integer, Person> hashtableEntry : hashtable.entrySet()) {
-            Person p = hashtableEntry.getValue();
-            list.add(p);
+            Integer key = hashtableEntry.getKey();
+            list.add(key);
         }
         return list;
     }
@@ -150,6 +149,5 @@ public class CollectionStorage {
         }
         return null;
     }
-
 
 }

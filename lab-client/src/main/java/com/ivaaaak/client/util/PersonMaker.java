@@ -1,7 +1,9 @@
 package com.ivaaaak.client.util;
 
 import com.ivaaaak.client.CollectionStorage;
-import com.ivaaaak.client.Data.*;
+import com.ivaaaak.client.Data.Person;
+import com.ivaaaak.client.Data.Color;
+import com.ivaaaak.client.Data.Country;
 import com.ivaaaak.client.UserInputManager;
 
 import java.util.Arrays;
@@ -12,31 +14,16 @@ public final class PersonMaker {
 
     }
 
-    public static void makePerson(CollectionStorage collectionStorage) {
-        Person p = new Person(collectionStorage.getMaxId() + 1);
-        p.setName(getInputName());
-        Coordinates coordinates = new Coordinates();
-        CoordinatesInitializer.initializeFields(coordinates);
-        p.setCoordinates(coordinates);
-        p.setHeight(getInputHeight());
-        p.setWeight(getInputWeight());
-        p.setHairColor(getInputColor());
-        p.setNationality(getInputCountry());
-        p.setLocation(LocationInitializer.initializeFields(new Location()));
+    public static Person makePerson(CollectionStorage collectionStorage) {
+        return new Person(collectionStorage, getInputName(), CoordinatesMaker.makeCoordinates(),
+                getInputHeight(), getInputWeight(), getInputColor(), getInputCountry(),
+                LocationMaker.makeLocation());
     }
-    public static void makePerson(Integer id) {
-        Person p = new Person(id);
-        p.setName(getInputName());
-        Coordinates coordinates = new Coordinates();
-        CoordinatesInitializer.initializeFields(coordinates);
-        p.setCoordinates(coordinates);
-        p.setHeight(getInputHeight());
-        p.setWeight(getInputWeight());
-        p.setHairColor(getInputColor());
-        p.setNationality(getInputCountry());
-        p.setLocation(LocationInitializer.initializeFields(new Location()));
+    public static Person makePerson(Integer id) {
+        return new Person(id, getInputName(), CoordinatesMaker.makeCoordinates(),
+                getInputHeight(), getInputWeight(), getInputColor(), getInputCountry(),
+                LocationMaker.makeLocation());
     }
-
 
 
     public static String getInputName() {
@@ -91,7 +78,7 @@ public final class PersonMaker {
         public static Float convertToHeightOrWeight(String input) {
 
             if (input.isEmpty()) {
-                return null;
+                return 0f;
             }
             try {
                 float height = Float.parseFloat(input);

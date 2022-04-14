@@ -14,10 +14,7 @@ public class RemoveLowerCommand extends Command {
 
     @Override
     public CommandResult execute(String arg) {
-
-        float height = PersonMaker.initializeHeight();
-        collectionStorage.removeLowerPerson(height);
-
+        collectionStorage.removeLowerPerson(PersonMaker.getInputHeight());
         return new CommandResult(false, "Lower elements were removed");
     }
 }

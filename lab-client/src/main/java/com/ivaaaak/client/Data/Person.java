@@ -7,25 +7,53 @@ import java.util.Objects;
 
 public class Person implements Comparable<Person> {
 
-    private final Integer id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
-    private String name; //Поле не может быть null, Строка не может быть пустой
-    private Coordinates coordinates; //Поле не может быть null
-    private final java.time.LocalDateTime creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
-    private float height; //Значение поля должно быть больше 0
-    private float weight; //Значение поля должно быть больше 0
-    private Color hairColor; //Поле не может быть null
-    private Country nationality; //Поле может быть null
-    private Location location; //Поле не может быть null
+    private final Integer id; //не null, больше 0, уникальное, генерируется автоматически
+    private final String name; //не null, строка не пустая
+    private final Coordinates coordinates; //не null
+    private final java.time.LocalDateTime creationDate; //не null, генерируется автоматически
+    private final float height; //больше 0
+    private final float weight; //больше 0
+    private final Color hairColor; //не null
+    private final Country nationality; //может быть null
+    private final Location location; //не null
 
 
-
-    public Person(CollectionStorage collectionStorage) {
-        this.creationDate = java.time.LocalDateTime.now();
+    public Person(CollectionStorage collectionStorage,
+                  String name,
+                  Coordinates coordinates,
+                  float height,
+                  float weight,
+                  Color hairColor,
+                  Country nationality,
+                  Location location) {
         this.id = collectionStorage.getMaxId() + 1;
-    }
-    public Person(Integer id) {
+        this.name = name;
+        this.coordinates = coordinates;
         this.creationDate = java.time.LocalDateTime.now();
+        this.height = height;
+        this.weight = weight;
+        this.hairColor = hairColor;
+        this.nationality = nationality;
+        this.location = location;
+    }
+
+    public Person(Integer id,
+                  String name,
+                  Coordinates coordinates,
+                  float height,
+                  float weight,
+                  Color hairColor,
+                  Country nationality,
+                  Location location) {
         this.id = id;
+        this.name = name;
+        this.coordinates = coordinates;
+        this.creationDate = java.time.LocalDateTime.now();
+        this.height = height;
+        this.weight = weight;
+        this.hairColor = hairColor;
+        this.nationality = nationality;
+        this.location = location;
     }
 
     @Override
@@ -79,34 +107,6 @@ public class Person implements Comparable<Person> {
 
     public Color getHairColor() {
         return hairColor;
-    }
-
-    public void setWeight(float weight) {
-        this.weight = weight;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setHeight(float height) {
-        this.height = height;
-    }
-
-    public void setCoordinates(Coordinates coordinates) {
-        this.coordinates = coordinates;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
-    public void setHairColor(Color hairColor) {
-        this.hairColor = hairColor;
-    }
-
-    public void setNationality(Country nationality) {
-        this.nationality = nationality;
     }
 
     @Override

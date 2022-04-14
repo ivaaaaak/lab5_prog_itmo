@@ -9,8 +9,8 @@ public final class LocationMaker {
 
     }
 
-    public static Location makeLocation () {
-        return new Location(getInputX(),getInputY(),getInputZ());
+    public static Location makeLocation() {
+        return new Location(getInputX(), getInputY(), getInputZ());
     }
 
     public static Long getInputX() {

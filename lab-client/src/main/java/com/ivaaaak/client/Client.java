@@ -20,7 +20,6 @@ public final class Client {
         final CommandInvoker commandInvoker = new CommandInvoker(commandStore);
 
 
-
         String fileData = FileManager.read(FileManager.FILE_PATH);
         Hashtable<Integer, Person> ht = JsonParser.deserialize(fileData);
         collectionStorage.initializeHashtable(ht);

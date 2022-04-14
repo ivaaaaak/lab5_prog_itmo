@@ -13,7 +13,6 @@ public final class CoordinatesMaker {
         return new Coordinates(getInputX(), getInputY());
     }
 
-
     public static Integer getInputX() {
         System.out.println("Enter an integer value of X coordinate (no more than 172):");
         Integer x = null;

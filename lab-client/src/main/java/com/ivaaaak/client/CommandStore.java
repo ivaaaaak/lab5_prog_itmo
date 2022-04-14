@@ -27,23 +27,23 @@ public class CommandStore {
 
     private final HashSet<Command> commands = new HashSet<>();
 
-    public CommandStore(CollectionStorage collectionManager, UserInputManager userInputManager) {
-        commands.add(new InsertCommand(collectionManager));
-        commands.add(new ShowCommand(collectionManager));
+    public CommandStore(CollectionStorage collectionStorage, UserInputManager userInputManager) {
+        commands.add(new InsertCommand(collectionStorage));
+        commands.add(new ShowCommand(collectionStorage));
         commands.add(new HelpCommand());
-        commands.add(new InfoCommand(collectionManager));
-        commands.add(new ClearCommand(collectionManager));
-        commands.add(new RemoveKeyCommand(collectionManager));
-        commands.add(new SaveCommand(collectionManager));
-        commands.add(new UpdateCommand(collectionManager));
+        commands.add(new InfoCommand(collectionStorage));
+        commands.add(new ClearCommand(collectionStorage));
+        commands.add(new RemoveKeyCommand(collectionStorage));
+        commands.add(new SaveCommand(collectionStorage));
+        commands.add(new UpdateCommand(collectionStorage));
         commands.add(new ExitCommand());
         commands.add(new ExecuteScriptCommand(userInputManager));
-        commands.add(new FilterByLocationCommand(collectionManager));
-        commands.add(new FilterStartsWithNameCommand(collectionManager));
-        commands.add(new RemoveLowerCommand(collectionManager));
-        commands.add(new MaxByHairColorCommand(collectionManager));
-        commands.add(new ReplaceIfGreaterCommand(collectionManager));
-        commands.add(new ReplaceIfLowerCommand(collectionManager));
+        commands.add(new FilterByLocationCommand(collectionStorage));
+        commands.add(new FilterStartsWithNameCommand(collectionStorage));
+        commands.add(new RemoveLowerCommand(collectionStorage));
+        commands.add(new MaxByHairColorCommand(collectionStorage));
+        commands.add(new ReplaceIfGreaterCommand(collectionStorage));
+        commands.add(new ReplaceIfLowerCommand(collectionStorage));
     }
 
     public HashSet<Command> getCommands() {
