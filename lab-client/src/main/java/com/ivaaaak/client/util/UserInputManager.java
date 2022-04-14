@@ -1,11 +1,11 @@
-package com.ivaaaak.client;
+package com.ivaaaak.client.util;
 
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayDeque;
 import java.util.Scanner;
-import java.util.Stack;
 
 public class UserInputManager {
 
@@ -13,8 +13,12 @@ public class UserInputManager {
      * This class reads user input from keyboard or from file with the script
      */
 
-    private static final Stack<BufferedReader> scripts = new Stack<>();
-    private static final Stack<String> filePaths = new Stack<>();
+    private UserInputManager() {
+
+    }
+
+    private static final ArrayDeque<BufferedReader> scripts = new ArrayDeque<>();
+    private static final ArrayDeque<String> filePaths = new ArrayDeque<>();
     private static final Scanner scanner =  new Scanner(System.in);
 
 
@@ -38,7 +42,7 @@ public class UserInputManager {
         }
     }
 
-    public void connectToFile(String filePath) throws IOException {
+    public static void connectToFile(String filePath) throws IOException {
         if (filePaths.contains(filePath)) {
             System.err.println("The file contains recursion");
         } else {

@@ -19,6 +19,9 @@ public class InsertCommand extends Command {
         }
         try {
             int key = Integer.parseInt(arg);
+            if (collectionStorage.getKeysList().contains(key)) {
+                return new CommandResult(false, "Collection have already got element with this key.");
+            }
             collectionStorage.add(key, PersonMaker.makePerson(collectionStorage));
             return new CommandResult(false, "The element has been added");
         } catch (NumberFormatException e) {

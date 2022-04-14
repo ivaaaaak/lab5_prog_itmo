@@ -4,7 +4,6 @@ import com.ivaaaak.client.CollectionStorage;
 import com.ivaaaak.client.Data.Person;
 import com.ivaaaak.client.Data.Color;
 import com.ivaaaak.client.Data.Country;
-import com.ivaaaak.client.UserInputManager;
 
 import java.util.Arrays;
 

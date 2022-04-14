@@ -1,7 +1,6 @@
 package com.ivaaaak.client.util;
 
 import com.ivaaaak.client.Data.Coordinates;
-import com.ivaaaak.client.UserInputManager;
 
 public final class CoordinatesMaker {
 

@@ -27,7 +27,7 @@ public class CommandStore {
 
     private final HashSet<Command> commands = new HashSet<>();
 
-    public CommandStore(CollectionStorage collectionStorage, UserInputManager userInputManager) {
+    public CommandStore(CollectionStorage collectionStorage) {
         commands.add(new InsertCommand(collectionStorage));
         commands.add(new ShowCommand(collectionStorage));
         commands.add(new HelpCommand());
@@ -37,7 +37,7 @@ public class CommandStore {
         commands.add(new SaveCommand(collectionStorage));
         commands.add(new UpdateCommand(collectionStorage));
         commands.add(new ExitCommand());
-        commands.add(new ExecuteScriptCommand(userInputManager));
+        commands.add(new ExecuteScriptCommand());
         commands.add(new FilterByLocationCommand(collectionStorage));
         commands.add(new FilterStartsWithNameCommand(collectionStorage));
         commands.add(new RemoveLowerCommand(collectionStorage));

@@ -8,7 +8,7 @@ public class ReplaceIfLowerCommand extends Command {
     private final CollectionStorage collectionStorage;
 
     public ReplaceIfLowerCommand(CollectionStorage collectionStorage) {
-        super("replace_if_greater");
+        super("replace_if_lower");
         this.collectionStorage = collectionStorage;
     }
 
