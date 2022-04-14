@@ -1,8 +1,7 @@
 package com.ivaaaak.client.util;
 
-import com.ivaaaak.client.Data.Color;
-import com.ivaaaak.client.Data.Country;
-import com.ivaaaak.client.Data.Person;
+import com.ivaaaak.client.CollectionStorage;
+import com.ivaaaak.client.Data.*;
 import com.ivaaaak.client.UserInputManager;
 
 import java.util.Arrays;
@@ -13,66 +12,148 @@ public final class PersonMaker {
 
     }
 
-    public static void initializePerson(Person p) {
-
-        p.setName(initializeName());
-        p.setCoordinates(CoordinatesMaker.initialize());
-        p.setHeight(initializeHeight());
-        p.setWeight(initializeWeight());
-        p.setHairColor(initializeColor());
-        p.setNationality(initializeCountry());
-        p.setLocation(LocationMaker.initialize());
-
+    public static void makePerson(CollectionStorage collectionStorage) {
+        Person p = new Person(collectionStorage.getMaxId() + 1);
+        p.setName(getInputName());
+        Coordinates coordinates = new Coordinates();
+        CoordinatesInitializer.initializeFields(coordinates);
+        p.setCoordinates(coordinates);
+        p.setHeight(getInputHeight());
+        p.setWeight(getInputWeight());
+        p.setHairColor(getInputColor());
+        p.setNationality(getInputCountry());
+        p.setLocation(LocationInitializer.initializeFields(new Location()));
+    }
+    public static void makePerson(Integer id) {
+        Person p = new Person(id);
+        p.setName(getInputName());
+        Coordinates coordinates = new Coordinates();
+        CoordinatesInitializer.initializeFields(coordinates);
+        p.setCoordinates(coordinates);
+        p.setHeight(getInputHeight());
+        p.setWeight(getInputWeight());
+        p.setHairColor(getInputColor());
+        p.setNationality(getInputCountry());
+        p.setLocation(LocationInitializer.initializeFields(new Location()));
     }
 
 
-    public static String initializeName() {
+
+    public static String getInputName() {
         System.out.println("Enter NAME: (cannot be an empty string)");
-        String name;
-        do {
-            name = PersonConverter.convertName(UserInputManager.readLine());
-        } while (name == null);
+
+        String name = null;
+        while (name == null) {
+            name = PersonConverter.convertToName(UserInputManager.readLine());
+        }
         return name;
     }
 
-
-    public static Float initializeHeight() {
-        System.out.println("Enter HEIGHT (more than 0 or empty string):");
-        Float height = PersonConverter.convertHeightOrWeight(UserInputManager.readLine());
-        if (!(height == null)) {
-            return height;
-        }
-        return 0f;
+    public static Float getInputHeight() {
+        System.out.println("Enter HEIGHT (more than 0 or null):");
+        return PersonConverter.convertToHeightOrWeight(UserInputManager.readLine());
     }
 
-    public static Float initializeWeight() {
-        System.out.println("Enter WEIGHT (more than 0 or empty string):");
-        Float weight = PersonConverter.convertHeightOrWeight(UserInputManager.readLine());
-        if (!(weight == null)) {
-            return weight;
-        }
-        return 0f;
+    public static Float getInputWeight() {
+        System.out.println("Enter WEIGHT (more than 0 or null):");
+        return PersonConverter.convertToHeightOrWeight(UserInputManager.readLine());
     }
 
-    public static Color initializeColor() {
+    public static Color getInputColor() {
         System.out.println(Arrays.toString(Color.values()));
         System.out.println("Enter the COLOR exactly as it is printed above: ");
-        Color hairColor;
-        do {
-            hairColor = PersonConverter.convertColor(UserInputManager.readLine());
-        } while (hairColor == null);
+
+        Color hairColor = null;
+        while (hairColor == null) {
+            hairColor = PersonConverter.convertToColor(UserInputManager.readLine());
+        }
         return hairColor;
     }
 
-    public static Country initializeCountry() {
+    public static Country getInputCountry() {
         System.out.println(Arrays.toString(Country.values()));
         System.out.println("Enter NATIONALITY exactly as it is printed above or empty string:");
+        return PersonConverter.convertToCountry(UserInputManager.readLine());
+    }
 
-        Country nationality = PersonConverter.convertCountry(UserInputManager.readLine());
-        if (!(nationality == null)) {
+
+
+    public static class PersonConverter {
+
+        public static String convertToName(String input) {
+            if (input.isEmpty()) {
+                System.out.println("Cannot be an empty string. Please try again:");
+                return null;
+            }
+            return input;
+        }
+
+        public static Float convertToHeightOrWeight(String input) {
+
+            if (input.isEmpty()) {
+                return null;
+            }
+            try {
+                float height = Float.parseFloat(input);
+                if (height <= 0) {
+                    System.out.println("Please enter numerical value (more than 0) (can be null)");
+                    return convertToHeightOrWeight(UserInputManager.readLine());
+                }
+                return height;
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter numerical value (more than 0) (can be null)");
+                return convertToHeightOrWeight(UserInputManager.readLine());
+            }
+
+        }
+
+        public static Color convertToColor(String input) {
+
+            Color hairColor = null;
+
+            switch (input) {
+                case "RED":
+                    hairColor = Color.RED;
+                    break;
+                case "BLUE":
+                    hairColor = Color.BLUE;
+                    break;
+                case "ORANGE":
+                    hairColor = Color.ORANGE;
+                    break;
+                default:
+                    System.out.println("Wrong input. Please try again:");
+                    break;
+            }
+            return hairColor;
+        }
+
+        public static Country convertToCountry(String input) {
+
+            Country nationality = null;
+
+            if (!input.isEmpty()) {
+                switch (input) {
+                    case "USA":
+                        nationality = Country.USA;
+                        break;
+                    case "CHINA":
+                        nationality = Country.CHINA;
+                        break;
+                    case "VATICAN":
+                        nationality = Country.VATICAN;
+                        break;
+                    case "NORTH_KOREA":
+                        nationality = Country.NORTH_KOREA;
+                        break;
+                    default:
+                        System.out.println("Wrong input. Please try again:");
+                        convertToCountry(UserInputManager.readLine());
+                        break;
+                }
+            }
             return nationality;
         }
-        return null;
     }
 
 }
