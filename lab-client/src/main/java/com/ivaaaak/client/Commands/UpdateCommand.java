@@ -1,16 +1,21 @@
 package com.ivaaaak.client.Commands;
 
 import com.ivaaaak.client.CollectionStorage;
+import com.ivaaaak.client.Data.Person;
+import com.ivaaaak.client.UserInputManager;
 import com.ivaaaak.client.util.PersonMaker;
 
 
 public class UpdateCommand extends Command {
 
     private final CollectionStorage collectionStorage;
+    private final UserInputManager userInputManager;
 
-    public UpdateCommand(CollectionStorage collectionStorage) {
+    public UpdateCommand(CollectionStorage collectionStorage,
+                         UserInputManager userInputManager) {
         super("update");
         this.collectionStorage = collectionStorage;
+        this.userInputManager = userInputManager;
     }
 
     @Override
@@ -23,7 +28,8 @@ public class UpdateCommand extends Command {
             Integer id = Integer.valueOf(arg);
             Integer key = collectionStorage.getMatchingKey(id);
             if (key != null) {
-                collectionStorage.replace(key, PersonMaker.makePerson(id));
+                Person newPerson = new PersonMaker(userInputManager).makePerson(id);
+                collectionStorage.replace(key, newPerson);
                 return new CommandResult(false, "The element has been updated");
             }
             return new CommandResult(false, "There's no element with this id. Use \"show\" to get information about elements");

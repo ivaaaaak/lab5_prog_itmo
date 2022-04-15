@@ -1,15 +1,20 @@
 package com.ivaaaak.client.Commands;
 
 import com.ivaaaak.client.CollectionStorage;
+import com.ivaaaak.client.Data.Person;
+import com.ivaaaak.client.UserInputManager;
 import com.ivaaaak.client.util.PersonMaker;
 
 public class ReplaceIfLowerCommand extends Command {
 
     private final CollectionStorage collectionStorage;
+    private final UserInputManager userInputManager;
 
-    public ReplaceIfLowerCommand(CollectionStorage collectionStorage) {
+    public ReplaceIfLowerCommand(CollectionStorage collectionStorage,
+                                 UserInputManager userInputManager) {
         super("replace_if_lower");
         this.collectionStorage = collectionStorage;
+        this.userInputManager = userInputManager;
     }
 
     @Override
@@ -19,7 +24,8 @@ public class ReplaceIfLowerCommand extends Command {
         }
         try {
             Integer key = Integer.valueOf(arg);
-            if (collectionStorage.replaceIfNewLower(key, PersonMaker.makePerson(collectionStorage))) {
+            Person newPerson = new PersonMaker(userInputManager).makePerson(collectionStorage);
+            if (collectionStorage.replaceIfNewLower(key, newPerson)) {
                 return new CommandResult(false, "The element has been replaced");
             }
             return new CommandResult(false, "The element is lower than a new one or equal");

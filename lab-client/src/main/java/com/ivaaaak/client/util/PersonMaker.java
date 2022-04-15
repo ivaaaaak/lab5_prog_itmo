@@ -4,64 +4,91 @@ import com.ivaaaak.client.CollectionStorage;
 import com.ivaaaak.client.Data.Person;
 import com.ivaaaak.client.Data.Color;
 import com.ivaaaak.client.Data.Country;
+import com.ivaaaak.client.UserInputManager;
 
 import java.util.Arrays;
 
-public final class PersonMaker {
+public class PersonMaker {
+    private final UserInputManager userInputManager;
+    private final LocationMaker locationMaker;
+    private final CoordinatesMaker coordinatesMaker;
 
-    private PersonMaker() {
-
+    public PersonMaker(UserInputManager userInputManager) {
+        this.userInputManager = userInputManager;
+        this.coordinatesMaker = new CoordinatesMaker(userInputManager);
+        this.locationMaker = new LocationMaker(userInputManager);
     }
 
-    public static Person makePerson(CollectionStorage collectionStorage) {
-        return new Person(collectionStorage, getInputName(), CoordinatesMaker.makeCoordinates(),
-                getInputHeight(), getInputWeight(), getInputColor(), getInputCountry(),
-                LocationMaker.makeLocation());
+    public Person makePerson(CollectionStorage collectionStorage) {
+        return new Person(collectionStorage,
+                getInputName(),
+                coordinatesMaker.makeCoordinates(),
+                getInputHeight(),
+                getInputWeight(),
+                getInputColor(),
+                getInputCountry(),
+                locationMaker.makeLocation());
     }
-    public static Person makePerson(Integer id) {
-        return new Person(id, getInputName(), CoordinatesMaker.makeCoordinates(),
-                getInputHeight(), getInputWeight(), getInputColor(), getInputCountry(),
-                LocationMaker.makeLocation());
+    public Person makePerson(Integer id) {
+        return new Person(id,
+                getInputName(),
+                coordinatesMaker.makeCoordinates(),
+                getInputHeight(),
+                getInputWeight(),
+                getInputColor(),
+                getInputCountry(),
+                locationMaker.makeLocation());
     }
 
 
-    public static String getInputName() {
+    public String getInputName() {
         System.out.println("Enter NAME: (cannot be an empty string)");
 
         String name = null;
         while (name == null) {
-            name = PersonConverter.convertToName(UserInputManager.readLine());
+            name = PersonConverter.convertToName(userInputManager.readLine());
         }
         return name;
     }
 
-    public static Float getInputHeight() {
+    public Float getInputHeight() {
         System.out.println("Enter HEIGHT (more than 0 or null):");
-        return PersonConverter.convertToHeightOrWeight(UserInputManager.readLine());
+        Float height = null;
+        while (height == null) {
+            height = PersonConverter.convertToHeightOrWeight(userInputManager.readLine());
+        }
+        return height;
     }
 
-    public static Float getInputWeight() {
+    public Float getInputWeight() {
         System.out.println("Enter WEIGHT (more than 0 or null):");
-        return PersonConverter.convertToHeightOrWeight(UserInputManager.readLine());
+        Float weight = null;
+        while (weight == null) {
+            weight = PersonConverter.convertToHeightOrWeight(userInputManager.readLine());
+        }
+        return weight;
     }
 
-    public static Color getInputColor() {
+    public Color getInputColor() {
         System.out.println(Arrays.toString(Color.values()));
         System.out.println("Enter the COLOR exactly as it is printed above: ");
 
         Color hairColor = null;
         while (hairColor == null) {
-            hairColor = PersonConverter.convertToColor(UserInputManager.readLine());
+            hairColor = PersonConverter.convertToColor(userInputManager.readLine());
         }
         return hairColor;
     }
 
-    public static Country getInputCountry() {
+    public Country getInputCountry() {
         System.out.println(Arrays.toString(Country.values()));
         System.out.println("Enter NATIONALITY exactly as it is printed above or empty string:");
-        return PersonConverter.convertToCountry(UserInputManager.readLine());
+        Country nationality = Country.NULL;
+        while (nationality == Country.NULL) {
+            nationality = PersonConverter.convertToCountry(userInputManager.readLine());
+        }
+        return nationality;
     }
-
 
 
     public static class PersonConverter {
@@ -83,12 +110,12 @@ public final class PersonMaker {
                 float height = Float.parseFloat(input);
                 if (height <= 0) {
                     System.out.println("Please enter numerical value (more than 0) (can be null)");
-                    return convertToHeightOrWeight(UserInputManager.readLine());
+                    return null;
                 }
                 return height;
             } catch (NumberFormatException e) {
                 System.out.println("Please enter numerical value (more than 0) (can be null)");
-                return convertToHeightOrWeight(UserInputManager.readLine());
+                return null;
             }
 
         }
@@ -134,7 +161,7 @@ public final class PersonMaker {
                         break;
                     default:
                         System.out.println("Wrong input. Please try again:");
-                        convertToCountry(UserInputManager.readLine());
+                        nationality = Country.NULL;
                         break;
                 }
             }

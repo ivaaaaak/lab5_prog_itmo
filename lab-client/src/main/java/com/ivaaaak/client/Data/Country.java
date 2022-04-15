@@ -4,5 +4,6 @@ public enum Country {
     USA,
     CHINA,
     VATICAN,
-    NORTH_KOREA
+    NORTH_KOREA,
+    NULL
 }

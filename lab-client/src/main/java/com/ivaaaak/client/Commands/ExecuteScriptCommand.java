@@ -1,14 +1,15 @@
 package com.ivaaaak.client.Commands;
 
-import com.ivaaaak.client.util.UserInputManager;
+import com.ivaaaak.client.UserInputManager;
 
-import java.io.IOException;
 
 
 public class ExecuteScriptCommand extends Command {
+    private final UserInputManager userInputManager;
 
-    public ExecuteScriptCommand() {
+    public ExecuteScriptCommand(UserInputManager userInputManager) {
         super("execute_script");
+        this.userInputManager = userInputManager;
     }
 
     @Override
@@ -16,11 +17,8 @@ public class ExecuteScriptCommand extends Command {
         if (arg.isEmpty()) {
             return new CommandResult(false, "This command needs an argument. Please try again and enter the file path:");
         }
-        try {
-            UserInputManager.connectToFile(arg);
-        } catch (IOException e) {
-            return new CommandResult(false, e.getMessage());
-        }
+        userInputManager.connectToFile(arg);
+
         return new CommandResult(false, "");
     }
 }

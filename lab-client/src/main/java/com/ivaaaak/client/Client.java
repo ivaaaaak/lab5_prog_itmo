@@ -4,7 +4,6 @@ import com.ivaaaak.client.Commands.CommandResult;
 import com.ivaaaak.client.Data.Person;
 import com.ivaaaak.client.util.FileManager;
 import com.ivaaaak.client.util.JsonParser;
-import com.ivaaaak.client.util.UserInputManager;
 
 import java.util.Hashtable;
 
@@ -16,8 +15,10 @@ public final class Client {
     public static void main(String[] args) {
 
         final CollectionStorage collectionStorage = new CollectionStorage();
-        final CommandStore commandStore = new CommandStore(collectionStorage);
+        final UserInputManager userInputManager = new UserInputManager();
+        final CommandStore commandStore = new CommandStore(collectionStorage, userInputManager);
         final CommandInvoker commandInvoker = new CommandInvoker(commandStore);
+
 
 
         String fileData = FileManager.read(FileManager.FILE_PATH);
@@ -28,7 +29,7 @@ public final class Client {
         do {
             String name = "";
             String arg = "";
-            String[] command = UserInputManager.readLine().split(" ");
+            String[] command = userInputManager.readLine().split(" ");
 
             if (command.length >= 1) {
                 name = command[0];

@@ -1,31 +1,34 @@
 package com.ivaaaak.client.util;
 
 import com.ivaaaak.client.Data.Coordinates;
+import com.ivaaaak.client.UserInputManager;
 
-public final class CoordinatesMaker {
+public class CoordinatesMaker {
+    private final UserInputManager userInputManager;
 
-    private CoordinatesMaker() {
-
+    public CoordinatesMaker(UserInputManager userInputManager) {
+        this.userInputManager = userInputManager;
     }
 
-    public static Coordinates makeCoordinates() {
-        return new Coordinates(getInputX(), getInputY());
+    public Coordinates makeCoordinates() {
+        return new Coordinates(getInputX(),
+                getInputY());
     }
 
-    public static Integer getInputX() {
+    public Integer getInputX() {
         System.out.println("Enter an integer value of X coordinate (no more than 172):");
         Integer x = null;
         while (x == null) {
-            x = CoordinatesConverter.convertX(UserInputManager.readLine());
+            x = CoordinatesConverter.convertX(userInputManager.readLine());
         }
         return x;
     }
 
-    public static Double getInputY() {
+    public Double getInputY() {
         System.out.println("Enter a value of Y coordinate:");
         Double y = null;
         while (y == null) {
-            y = CoordinatesConverter.convertY(UserInputManager.readLine());
+            y = CoordinatesConverter.convertY(userInputManager.readLine());
         }
         return y;
     }

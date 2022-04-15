@@ -35,9 +35,9 @@ public class CollectionStorage {
         return hashtable;
     }
 
-    public void initializeHashtable(Hashtable<Integer, Person> hashtable) {
+    public void initializeHashtable(Hashtable<Integer, Person> fileHashtable) {
         creationDate = LocalDate.now();
-        this.hashtable = hashtable;
+        hashtable = fileHashtable;
     }
 
     public void clear() {
@@ -135,7 +135,7 @@ public class CollectionStorage {
         return hashtable.keySet();
     }
 
-    public boolean checkIfContains(Integer key) {
+    public boolean containsKey(Integer key) {
         return getKeysSet().contains(key);
     }
 

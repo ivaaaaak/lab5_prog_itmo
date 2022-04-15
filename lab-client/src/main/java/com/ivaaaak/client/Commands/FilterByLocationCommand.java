@@ -1,20 +1,24 @@
 package com.ivaaaak.client.Commands;
 
 import com.ivaaaak.client.CollectionStorage;
+import com.ivaaaak.client.Data.Location;
 import com.ivaaaak.client.Data.Person;
+import com.ivaaaak.client.UserInputManager;
 import com.ivaaaak.client.util.LocationMaker;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 
 public class FilterByLocationCommand extends Command {
 
     private final CollectionStorage collectionStorage;
+    private final UserInputManager userInputManager;
 
-    public FilterByLocationCommand(CollectionStorage collectionStorage) {
+    public FilterByLocationCommand(CollectionStorage collectionStorage,
+                                   UserInputManager userInputManager) {
         super("filter_by_location");
         this.collectionStorage = collectionStorage;
+        this.userInputManager = userInputManager;
     }
 
     @Override
@@ -24,7 +28,8 @@ public class FilterByLocationCommand extends Command {
             return new CommandResult(false, "The collection is empty");
         }
 
-        List<Person> list = collectionStorage.getMatchingPeople(LocationMaker.makeLocation());
+        Location location = new LocationMaker(userInputManager).makeLocation();
+        List<Person> list = collectionStorage.getMatchingPeople(location);
         StringJoiner output = new StringJoiner("\n\n");
         for (Person person : list) {
             output.add(person.toString());

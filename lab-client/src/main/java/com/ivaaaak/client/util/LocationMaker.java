@@ -1,40 +1,44 @@
 package com.ivaaaak.client.util;
 
 import com.ivaaaak.client.Data.Location;
+import com.ivaaaak.client.UserInputManager;
 
-public final class LocationMaker {
+public class LocationMaker {
+    private final UserInputManager userInputManager;
 
-    private LocationMaker() {
-
+    public LocationMaker(UserInputManager userInputManager) {
+        this.userInputManager = userInputManager;
     }
 
-    public static Location makeLocation() {
-        return new Location(getInputX(), getInputY(), getInputZ());
+    public Location makeLocation() {
+        return new Location(getInputX(),
+                getInputY(),
+                getInputZ());
     }
 
-    public static Long getInputX() {
+    public Long getInputX() {
         System.out.println("Enter location X:");
         Long x = null;
         while (x == null) {
-            x = LocationConverter.convertX(UserInputManager.readLine());
+            x = LocationConverter.convertX(userInputManager.readLine());
         }
         return x;
     }
 
-    public static Integer getInputY() {
+    public Integer getInputY() {
         System.out.println("Enter integer location Y:");
         Integer y = null;
         while (y == null) {
-            y = LocationConverter.convertY(UserInputManager.readLine());
+            y = LocationConverter.convertY(userInputManager.readLine());
         }
         return y;
     }
 
-    public static Integer getInputZ() {
+    public Integer getInputZ() {
         System.out.println("Enter integer location Z:");
         Integer z = null;
         while (z == null) {
-            z = LocationConverter.convertZ(UserInputManager.readLine());
+            z = LocationConverter.convertZ(userInputManager.readLine());
         }
         return z;
     }
