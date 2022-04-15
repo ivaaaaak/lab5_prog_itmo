@@ -5,6 +5,7 @@ import com.ivaaaak.client.Data.Person;
 import com.ivaaaak.client.util.LocationMaker;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.StringJoiner;
 
 public class FilterByLocationCommand extends Command {
@@ -23,7 +24,7 @@ public class FilterByLocationCommand extends Command {
             return new CommandResult(false, "The collection is empty");
         }
 
-        ArrayList<Person> list = collectionStorage.getMatchingPeople(LocationMaker.makeLocation());
+        List<Person> list = collectionStorage.getMatchingPeople(LocationMaker.makeLocation());
         StringJoiner output = new StringJoiner("\n\n");
         for (Person person : list) {
             output.add(person.toString());

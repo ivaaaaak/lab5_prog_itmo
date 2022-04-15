@@ -18,8 +18,8 @@ public class InsertCommand extends Command {
             return new CommandResult(false, "This command needs an argument. Please try again and enter the key:");
         }
         try {
-            int key = Integer.parseInt(arg);
-            if (collectionStorage.getKeysList().contains(key)) {
+            Integer key = Integer.valueOf(arg);
+            if (collectionStorage.checkIfContains(key)) {
                 return new CommandResult(false, "Collection have already got element with this key.");
             }
             collectionStorage.add(key, PersonMaker.makePerson(collectionStorage));

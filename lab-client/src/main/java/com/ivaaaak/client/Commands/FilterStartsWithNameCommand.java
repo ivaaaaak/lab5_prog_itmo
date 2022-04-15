@@ -3,7 +3,7 @@ package com.ivaaaak.client.Commands;
 import com.ivaaaak.client.CollectionStorage;
 import com.ivaaaak.client.Data.Person;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.StringJoiner;
 
 
@@ -25,7 +25,7 @@ public class FilterStartsWithNameCommand extends Command {
         if (collectionStorage.getHashtable().isEmpty()) {
             return new CommandResult(false, "The collection is empty");
         }
-        ArrayList<Person> list = collectionStorage.getMatchingPeople(arg);
+        List<Person> list = collectionStorage.getMatchingPeople(arg);
         StringJoiner output = new StringJoiner("\n\n");
         for (Person person : list) {
             output.add(person.toString());

@@ -18,7 +18,7 @@ public class ReplaceIfLowerCommand extends Command {
             return new CommandResult(false, "This command needs an argument. Please try again and enter the key:");
         }
         try {
-            int key = Integer.parseInt(arg);
+            Integer key = Integer.valueOf(arg);
             if (collectionStorage.replaceIfNewLower(key, PersonMaker.makePerson(collectionStorage))) {
                 return new CommandResult(false, "The element has been replaced");
             }

@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.Scanner;
 
-public class UserInputManager {
+public final class UserInputManager {
 
     /**
      * This class reads user input from keyboard or from file with the script
@@ -46,9 +46,10 @@ public class UserInputManager {
         if (filePaths.contains(filePath)) {
             System.err.println("The file contains recursion");
         } else {
-            BufferedReader bf = new BufferedReader(new FileReader(filePath));
-            scripts.push(bf);
-            filePaths.push(filePath);
+            try (BufferedReader bf = new BufferedReader(new FileReader(filePath))) {
+                scripts.push(bf);
+                filePaths.push(filePath);
+            }
         }
     }
 

@@ -13,9 +13,9 @@ public class CommandInvoker {
 
     public CommandResult runCommand(String name, String arg) {
 
-        for (Command c: commandStore.getCommands()) {
-            if (c.getName().equals(name)) {
-                return c.execute(arg);
+        for (Command command: commandStore.getCommands()) {
+            if (command.getName().equals(name)) {
+                return command.execute(arg);
             }
         }
         return new CommandResult(false, "Command not found. Use \"help\" to get information about commands");

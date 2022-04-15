@@ -20,7 +20,7 @@ public class ShowCommand extends Command {
             return new CommandResult(false, "The collection is empty");
         }
         StringJoiner output = new StringJoiner("\n\n");
-        for (Integer key : collectionStorage.getKeysList()) {
+        for (Integer key : collectionStorage.getKeysSet()) {
             output.add(key + " = " + collectionStorage.getPerson(key).toString());
         }
         return new CommandResult(false, output.toString());

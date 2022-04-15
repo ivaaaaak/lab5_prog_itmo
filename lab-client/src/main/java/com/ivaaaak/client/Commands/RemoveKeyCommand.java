@@ -17,7 +17,7 @@ public class RemoveKeyCommand extends Command {
             return new CommandResult(false, "This command needs an argument. Please try again and enter the key:");
         }
         try {
-            int key = Integer.parseInt(arg);
+            Integer key = Integer.valueOf(arg);
             collectionStorage.remove(key);
             return new CommandResult(false, "The element has been removed");
         } catch (NumberFormatException e) {
