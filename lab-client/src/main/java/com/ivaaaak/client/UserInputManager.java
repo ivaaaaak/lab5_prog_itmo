@@ -12,20 +12,23 @@ public class UserInputManager {
      */
 
 
-    private final ArrayDeque<Scanner> scripts = new ArrayDeque<>();
+    private final ArrayDeque<ArrayDeque<String>> allScripts = new ArrayDeque<>();
     private final ArrayDeque<String> filePaths = new ArrayDeque<>();
     private final Scanner scanner =  new Scanner(System.in);
 
 
     public String readLine() {
-        if (!scripts.isEmpty()) {
-            Scanner currentScanner = scripts.peek();
-            if (currentScanner.hasNextLine()) {
-                return currentScanner.nextLine();
+        if (!allScripts.isEmpty()) {
+            ArrayDeque<String> currenScript = allScripts.peek();
+            if (!currenScript.isEmpty()) {
+                String command = currenScript.peek();
+                if (command.equals(currenScript.peekLast())) {
+                    allScripts.pop();
+                    filePaths.pop();
+                }
+                currenScript.pop();
+                return command;
             }
-            filePaths.pop();
-            scripts.pop().close();
-            return readLine();
         }
         return scanner.nextLine();
     }
@@ -34,8 +37,14 @@ public class UserInputManager {
         if (filePaths.contains(filePath)) {
             System.err.println("The file contains recursion");
         } else {
-            scripts.push(new Scanner(FileManager.read(filePath)));
-            filePaths.push(filePath);
+            try (Scanner sc = new Scanner(FileManager.read(filePath))) {
+                ArrayDeque<String> script = new ArrayDeque<>();
+                while (sc.hasNextLine()) {
+                    script.add(sc.nextLine());
+                }
+                allScripts.push(script);
+                filePaths.push(filePath);
+            }
         }
     }
 
