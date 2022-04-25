@@ -21,14 +21,11 @@ public class UserInputManager {
         if (!allScripts.isEmpty()) {
             ArrayDeque<String> currenScript = allScripts.peek();
             if (!currenScript.isEmpty()) {
-                String command = currenScript.peek();
-                if (command.equals(currenScript.peekLast())) {
-                    allScripts.pop();
-                    filePaths.pop();
-                }
-                currenScript.pop();
-                return command;
+                return currenScript.pop();
             }
+            allScripts.pop();
+            filePaths.pop();
+            return readLine();
         }
         return scanner.nextLine();
     }
@@ -37,13 +34,16 @@ public class UserInputManager {
         if (filePaths.contains(filePath)) {
             System.err.println("The file contains recursion");
         } else {
-            try (Scanner sc = new Scanner(FileManager.read(filePath))) {
-                ArrayDeque<String> script = new ArrayDeque<>();
-                while (sc.hasNextLine()) {
-                    script.add(sc.nextLine());
+            String script = FileManager.read(filePath);
+            if (!script.isEmpty()) {
+                try (Scanner sc = new Scanner(script)) {
+                    ArrayDeque<String> commands = new ArrayDeque<>();
+                    while (sc.hasNextLine()) {
+                        commands.add(sc.nextLine());
+                    }
+                    filePaths.push(filePath);
+                    allScripts.push(commands);
                 }
-                allScripts.push(script);
-                filePaths.push(filePath);
             }
         }
     }
